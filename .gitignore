@@ -1,0 +1,3 @@
+*.pyc
+solr/mycores/**/data/*
+!solr/mycores/**/data/.gitkeep

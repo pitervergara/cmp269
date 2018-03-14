@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+  solr:
+    image: solr:7.2.1
+    ports:
+     - "8983:8983"
+    volumes:
+      - ./solr/mycores:/opt/solr/server/solr/mycores
+      - ./solr/backups:/backups
+    entrypoint:
+      - docker-entrypoint.sh
+      - solr-precreate
+      - cmp269
+
+  ipython:
+    image: ipython/scipyserver
+    ports: 
+      - "8888:8888"
+    environment:
+      PASSWORD: cmp269
+    links:
+      - solr
