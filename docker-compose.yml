@@ -19,6 +19,6 @@ services:
     links:
       - solr
     volumes:
-      - ./data:/notebooks/data
+      - ./notebooks:/notebooks
 
 

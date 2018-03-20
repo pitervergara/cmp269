@@ -1,4 +1,4 @@
 *.pyc
-data/*
-!data/*.zip
-!data/Consultas.txt
+notebooks/data/**/*
+!notebooks/data/*.zip
+!notebooks/data/Consultas.txt
