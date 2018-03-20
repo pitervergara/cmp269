@@ -1,3 +1,4 @@
 *.pyc
-solr/mycores/**/data/*
-!solr/mycores/**/data/.gitkeep
+data/*
+!data/*.zip
+!data/Consultas.txt
