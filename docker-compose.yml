@@ -5,9 +5,6 @@ services:
     image: solr:7.2.1
     ports:
      - "8983:8983"
-    volumes:
-      - ./solr/mycores:/opt/solr/server/solr/mycores
-      - ./solr/backups:/backups
     entrypoint:
       - docker-entrypoint.sh
       - solr-precreate
@@ -21,3 +18,10 @@ services:
       PASSWORD: cmp269
     links:
       - solr
+
+  python:
+    image: python:3.5
+    volumes:
+      - ./:/cmp269
+    command: tail -f /dev/null
+
