@@ -1,4 +1,5 @@
 *.pyc
 notebooks/data/**/*
+notebooks/.ipynb_checkpoints/*
 !notebooks/data/*.zip
 !notebooks/data/Consultas.txt

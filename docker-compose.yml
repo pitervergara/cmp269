@@ -16,6 +16,8 @@ services:
       - "8888:8888"
     environment:
       PASSWORD: "cmp269"
+      http_proxy:
+      https_proxy:
     links:
       - solr
     volumes:
