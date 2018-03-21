@@ -1,0 +1,131 @@
+A collection must have a configSet, which at a minimum includes the two main configuration files for Solr: the schema file (named either managed-schema or schema.xml), and solrconfig.xml. The question here is which configSet you would like to start with. The _default is a bare-bones option, but note there’s one whose name includes "techproducts", the same as we named our collection. This configSet is specifically designed to support the sample data we want to use, so enter sample_techproducts_configs at the prompt and hit enter.
+
+--
+
+All Solr queries look for documents using some field. Often you want to query across multiple fields at the same time, and this is what we’ve done so far with the "foundation" query. This is possible with the use of copy fields, which are set up already with this set of configurations. We’ll cover copy fields a little bit more in Exercise 2.
+
+
+--
+Update your query in the q field of the Admin UI so it’s cat:electronics. Now you get 12 results:
+
+
+Phrase Search
+To search for a multi-term phrase, enclose it in double quotes: q="multiple terms here". For example, search for "CAS latency" by entering that phrase in quotes to the q box in the Admin UI.
+
+
+Combining Searches
+By default, when you search for multiple terms and/or phrases in a single query, Solr will only require that one of them is present in order for a document to match. Documents containing more terms will be sorted higher in the results list.
+
+You can require that a term or phrase is present by prefixing it with a +; conversely, to disallow the presence of a term or phrase, prefix it with a -.
+
+(http://lucene.apache.org/solr/guide/7_2/solr-tutorial.html)
+---
+
+
+One reason for this is we’re going to use a feature in Solr called "field guessing", where Solr attempts to guess what type of data is in a field while it’s indexing it. It also automatically creates new fields in the schema for new fields that appear in incoming documents. This mode is called "Schemaless". We’ll see the benefits and limitations of this approach to help you decide how and where to use it in your real application.
+(http://lucene.apache.org/solr/guide/7_2/solr-tutorial.html#create-a-new-collection)
+
+
+What is a "schema" and why do I need one?
+Solr’s schema is a single file (in XML) that stores the details about the fields and field types Solr is expected to understand. The schema defines not only the field or field type names, but also any modifications that should happen to a field before it is indexed. For example, if you want to ensure that a user who enters "abc" and a user who enters "ABC" can both find a document containing the term "ABC", you will want to normalize (lower-case it, in this case) "ABC" when it is indexed, and normalize the user query to be sure of a match. These rules are defined in your schema.
+
+Earlier in the tutorial we mentioned copy fields, which are fields made up of data that originated from other fields. You can also define dynamic fields, which use wildcards (such as *_t or *_s) to dynamically create fields of a specific field type. These types of rules are also defined in the schema.
+
+
+
+
+====
+For these reasons, the Solr community does not recommend going to production without a schema that you have defined yourself. By this we mean that the schemaless features are fine to start with, but you should still always make sure your schema matches your expectations for how you want your data indexed and how users are going to query it.
+
+It is possible to mix schemaless features with a defined schema. Using the Schema API, you can define a few fields that you know you want to control, and let Solr guess others that are less important or which you are confident (through testing) will be guessed to your satisfaction. That’s what we’re going to do here.
+
+
+
+---
+If you look at one of the files in example/films, you’ll see the first film is named .45, released in 2006. As the first document in the dataset, Solr is going to guess the field type based on the data in the record. If we go ahead and index this data, that first film name is going to indicate to Solr that that field type is a "float" numeric field, and will create a "name" field with a type FloatPointField. All data after this record will be expected to be a float.
+
+
+Definindo um campo texto:
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field": {"name":"name", "type":"text_general", "multiValued":false, "stored":true}}' http://localhost:8983/solr/films/schema
+
+
+
+Definindo um campo "catchall":
+(What this does is make a copy of all fields and put the data into the "_text_" field.)
+curl -X POST -H 'Content-type:application/json' --data-binary '{"add-copy-field" : {"source":"*","dest":"_text_"}}' http://localhost:8983/solr/films/schema
+
+
+
+Range Facets
+For numerics or dates, it’s often desirable to partition the facet counts into ranges rather than discrete values.
+
+
+Pivot Facets
+Another faceting type is pivot facets, also known as "decision trees", allowing two or more fields to be nested for all the various possible combinations. Using the films data, pivot facets can be used to see how many of the films in the "Drama" category (the genre_str field) are directed by a director. 
+
+
+
+
+=======
+
+
+Solr System Requirements
+You can install Solr in any system where a suitable Java Runtime Environment (JRE) is available, as detailed below.
+
+Currently this includes Linux, MacOS/OS X, and Microsoft Windows.
+
+Installation Requirements
+Java Requirements
+You will need the Java Runtime Environment (JRE) version 1.8 or higher. At a command line, check your Java version like this:
+
+(http://lucene.apache.org/solr/guide/7_2/solr-system-requirements.html)
+
+---
+Preparing for Installation
+When getting started with Solr, all you need to do is extract the Solr distribution archive to a directory of your choosing. This will suffice as an initial development environment, but take care not to overtax this "toy" installation before setting up your true development and production environments.
+
+When you’ve progressed past initial evaluation of Solr, you’ll want to take care to plan your implementation. You may need to reinstall Solr on another server or make a clustered SolrCloud environment.
+
+(http://lucene.apache.org/solr/guide/7_2/installing-solr.html#preparing-for-installation)
+
+
+
+=====
+Analysis Screen
+The Analysis screen lets you inspect how data will be handled according to the field, field type and dynamic field configurations found in your Schema. You can analyze how content would be handled during indexing or during query processing and view the results separately or at the same time
+
+(http://lucene.apache.org/solr/guide/7_2/analysis-screen.html)
+
+=====
+Files Screen
+While solrconfig.xml defines the behavior of Solr as it indexes content and responds to queries, the Schema allows you to define the types of data in your content (field types), the fields your documents will be broken into, and any dynamic fields that should be generated based on patterns of field names in the incoming documents. Any other configuration files are used depending on how they are referenced in either solrconfig.xml or your schema.
+(http://lucene.apache.org/solr/guide/7_2/files-screen.html)
+
+
+
+=====
+Schema Browser Screen
+The Schema Browser screen lets you review schema data in a browser window.
+
+
+Term Information is loaded from single arbitrarily selected core from the collection, to provide a representative sample for the collection. Full Field Facet query results are needed to see precise term counts across the entire collection.
+
+
+
+
+=====
+
+
+
+The fundamental premise of Solr is simple. You give it a lot of information, then later you can ask it questions and find the piece of information you want. The part where you feed in all the information is called indexing or updating. When you ask a question, it’s called a query.
+(http://lucene.apache.org/solr/guide/7_2/overview-of-documents-fields-and-schema-design.html)
+
+
+You can tell Solr about the kind of data a field contains by specifying its field type. The field type tells Solr how to interpret the field and how it can be queried.
+
+The solution to both these problems is field analysis. For the biography field, you can tell Solr how to break apart the biography into words. You can tell Solr that you want to make all the words lower case, and you can tell Solr to remove accents marks.
+(http://lucene.apache.org/solr/guide/7_2/overview-of-documents-fields-and-schema-design.html#how-solr-sees-the-world)
+
+
+
+Parei aqui:http://lucene.apache.org/solr/guide/7_2/solr-field-types.html

@@ -1,4 +1,5 @@
 *.pyc
+mycores/*/data
 notebooks/data/**/*
 notebooks/.ipynb_checkpoints/*
 !notebooks/data/*.zip
