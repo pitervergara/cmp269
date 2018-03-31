@@ -1,5 +1,6 @@
 *.pyc
-mycores/*/data
+mycores/**/data
+!mycores/**/data/.gitkeep
 notebooks/data/**/*
 notebooks/.ipynb_checkpoints/*
 !notebooks/data/*.zip
