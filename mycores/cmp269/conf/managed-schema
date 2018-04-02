@@ -84,43 +84,25 @@
     </analyzer>
   </fieldType>
   <fieldType name="text_c1" class="solr.TextField" positionIncrementGap="100">
-    <analyzer type="index">
-      <tokenizer class="solr.StandardTokenizerFactory"/>
-    </analyzer>
-    <analyzer type="query">
+    <analyzer>
       <tokenizer class="solr.StandardTokenizerFactory"/>
     </analyzer>
   </fieldType>
   <fieldType name="text_c2" class="solr.TextField" positionIncrementGap="100">
-    <analyzer type="index">
-      <tokenizer class="solr.StandardTokenizerFactory"/>
-      <filter class="solr.LowerCaseFilterFactory"/>
-    </analyzer>
-    <analyzer type="query">
+    <analyzer>
       <tokenizer class="solr.StandardTokenizerFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
     </analyzer>
   </fieldType>
   <fieldType name="text_c3" class="solr.TextField" positionIncrementGap="100">
-    <analyzer type="index">
-      <tokenizer class="solr.StandardTokenizerFactory"/>
-      <filter class="solr.LowerCaseFilterFactory"/>
-      <filter class="solr.StopFilterFactory" format="snowball" words="lang/stopwords_pt.txt" ignoreCase="true"/>
-    </analyzer>
-    <analyzer type="query">
+    <analyzer>
       <tokenizer class="solr.StandardTokenizerFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
       <filter class="solr.StopFilterFactory" format="snowball" words="lang/stopwords_pt.txt" ignoreCase="true"/>
     </analyzer>
   </fieldType>
   <fieldType name="text_c4" class="solr.TextField" positionIncrementGap="100">
-    <analyzer type="index">
-      <tokenizer class="solr.StandardTokenizerFactory"/>
-      <filter class="solr.LowerCaseFilterFactory"/>
-      <filter class="solr.StopFilterFactory" format="snowball" words="lang/stopwords_pt.txt" ignoreCase="true"/>
-      <filter class="solr.PortugueseLightStemFilterFactory"/>
-    </analyzer>
-    <analyzer type="query">
+    <analyzer>
       <tokenizer class="solr.StandardTokenizerFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
       <filter class="solr.StopFilterFactory" format="snowball" words="lang/stopwords_pt.txt" ignoreCase="true"/>
@@ -128,44 +110,32 @@
     </analyzer>
   </fieldType>
   <fieldType name="text_c5" class="solr.TextField" positionIncrementGap="100">
-    <analyzer type="index">
+    <analyzer>
       <tokenizer class="solr.StandardTokenizerFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
       <filter class="solr.StopFilterFactory" format="snowball" words="lang/stopwords_pt.txt" ignoreCase="true"/>
-      <filter class="solr.PortugueseMinimalStemFilterFactory"/>
-    </analyzer>
-    <analyzer type="query">
-      <tokenizer class="solr.StandardTokenizerFactory"/>
-      <filter class="solr.LowerCaseFilterFactory"/>
-      <filter class="solr.StopFilterFactory" format="snowball" words="lang/stopwords_pt.txt" ignoreCase="true"/>
+      <filter class="solr.PortugueseLightStemFilterFactory"/>
       <filter class="solr.PortugueseMinimalStemFilterFactory"/>
     </analyzer>
   </fieldType>
   <fieldType name="text_c6" class="solr.TextField" positionIncrementGap="100">
-    <analyzer type="index">
+    <analyzer>
       <tokenizer class="solr.StandardTokenizerFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
       <filter class="solr.StopFilterFactory" format="snowball" words="lang/stopwords_pt.txt" ignoreCase="true"/>
-      <filter class="solr.SnowballPorterFilterFactory" language="Portuguese"/>
-    </analyzer>
-    <analyzer type="query">
-      <tokenizer class="solr.StandardTokenizerFactory"/>
-      <filter class="solr.LowerCaseFilterFactory"/>
-      <filter class="solr.StopFilterFactory" format="snowball" words="lang/stopwords_pt.txt" ignoreCase="true"/>
+      <filter class="solr.PortugueseLightStemFilterFactory"/>
+      <filter class="solr.PortugueseMinimalStemFilterFactory"/>
       <filter class="solr.SnowballPorterFilterFactory" language="Portuguese"/>
     </analyzer>
   </fieldType>
   <fieldType name="text_c7" class="solr.TextField" positionIncrementGap="100">
-    <analyzer type="index">
+    <analyzer>
       <tokenizer class="solr.StandardTokenizerFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
       <filter class="solr.StopFilterFactory" format="snowball" words="lang/stopwords_pt.txt" ignoreCase="true"/>
-      <filter class="solr.PortugueseStemFilterFactory"/>
-    </analyzer>
-    <analyzer type="query">
-      <tokenizer class="solr.StandardTokenizerFactory"/>
-      <filter class="solr.LowerCaseFilterFactory"/>
-      <filter class="solr.StopFilterFactory" format="snowball" words="lang/stopwords_pt.txt" ignoreCase="true"/>
+      <filter class="solr.PortugueseLightStemFilterFactory"/>
+      <filter class="solr.PortugueseMinimalStemFilterFactory"/>
+      <filter class="solr.SnowballPorterFilterFactory" language="Portuguese"/>
       <filter class="solr.PortugueseStemFilterFactory"/>
     </analyzer>
   </fieldType>
@@ -504,7 +474,6 @@
   <field name="_text_" type="text_general" multiValued="true" indexed="true" stored="false"/>
   <field name="_version_" type="plong" indexed="false" stored="false"/>
   <field name="id" type="string" multiValued="false" indexed="true" required="true" stored="true"/>
-  <field name="text_txt_st" type="text_general"/>
   <dynamicField name="*_txt_en_split_tight" type="text_en_splitting_tight" indexed="true" stored="true"/>
   <dynamicField name="*_descendent_path" type="descendent_path" indexed="true" stored="true"/>
   <dynamicField name="*_ancestor_path" type="ancestor_path" indexed="true" stored="true"/>
@@ -543,13 +512,13 @@
   <dynamicField name="*_txt_sv" type="text_sv" indexed="true" stored="true"/>
   <dynamicField name="*_txt_th" type="text_th" indexed="true" stored="true"/>
   <dynamicField name="*_txt_tr" type="text_tr" indexed="true" stored="true"/>
-  <dynamicField name="*_txt_c1" type="text_c1" indexed="true" stored="true"/>
-  <dynamicField name="*_txt_c2" type="text_c2" indexed="true" stored="true"/>
-  <dynamicField name="*_txt_c3" type="text_c3" indexed="true" stored="true"/>
-  <dynamicField name="*_txt_c4" type="text_c4" indexed="true" stored="true"/>
-  <dynamicField name="*_txt_c5" type="text_c5" indexed="true" stored="true"/>
-  <dynamicField name="*_txt_c6" type="text_c6" indexed="true" stored="true"/>
-  <dynamicField name="*_txt_c7" type="text_c7" indexed="true" stored="true"/>
+  <dynamicField name="*_txt_c1" type="text_c1" stored="true"/>
+  <dynamicField name="*_txt_c2" type="text_c2" stored="true"/>
+  <dynamicField name="*_txt_c3" type="text_c3" stored="true"/>
+  <dynamicField name="*_txt_c4" type="text_c4" stored="true"/>
+  <dynamicField name="*_txt_c5" type="text_c5" stored="true"/>
+  <dynamicField name="*_txt_c6" type="text_c6" stored="true"/>
+  <dynamicField name="*_txt_c7" type="text_c7" stored="true"/>
   <dynamicField name="*_point" type="point" indexed="true" stored="true"/>
   <dynamicField name="*_srpt" type="location_rpt" indexed="true" stored="true"/>
   <dynamicField name="attr_*" type="text_general" multiValued="true" indexed="true" stored="true"/>
@@ -574,5 +543,4 @@
   <dynamicField name="*_f" type="pfloat" indexed="true" stored="true"/>
   <dynamicField name="*_d" type="pdouble" indexed="true" stored="true"/>
   <dynamicField name="*_p" type="location" indexed="true" stored="true"/>
-  <copyField source="text_txt_st" dest="text_txt_st_str" maxChars="256"/>
 </schema>
