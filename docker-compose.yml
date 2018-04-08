@@ -9,8 +9,6 @@ services:
       - docker-entrypoint.sh
       - solr-precreate
       - cmp269
-    volumes:
-      - ./mycores:/opt/solr/server/solr/mycores      
 
   ipython:
     image: ipython/scipyserver
