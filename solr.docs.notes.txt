@@ -129,3 +129,41 @@ The solution to both these problems is field analysis. For the biography field, 
 
 
 Parei aqui:http://lucene.apache.org/solr/guide/7_2/solr-field-types.html
+
+
+
+======
+Relevance is the degree to which a query response satisfies a user who is searching for information.
+
+The relevance of a query response depends on the context in which the query was performed. A single search application may be used in different contexts by users with different needs and expectations. For example, a search engine of climate data might be used by a university researcher studying long-term climate trends, a farmer interested in calculating the likely date of the last frost of spring, a civil engineer interested in rainfall patterns and the frequency of floods, and a college student planning a vacation to a region and wondering what to pack. Because the motivations of these users vary, the relevance of any particular response to a query will vary as well.
+
+(http://lucene.apache.org/solr/guide/7_2/relevance.html)
+
+The e-discovery and recipe examples demonstrate the importance of two concepts related to relevance:
+
+Precision is the percentage of documents in the returned results that are relevant.
+
+Recall is the percentage of relevant results returned out of all relevant results in the system. Obtaining perfect recall is trivial: simply return every document in the collection for every query.
+
+
+
+
+Using the concepts of precision and recall, it’s possible to quantify relevance across users and queries for a collection of documents. A perfect system would have 100% precision and 100% recall for every user and every query. In other words, it would retrieve all the relevant documents and nothing else. In practical terms, when talking about precision and recall in real systems, it is common to focus on precision and recall at a certain number of results, the most common (and useful) being ten results.
+
+
+
+
+
+
+
+
+
+TFIDFSimilarity defines the components of Lucene scoring. Overriding computation of these components is a convenient way to alter Lucene scoring.
+
+Suggested reading: Introduction To Information Retrieval, Chapter 6.
+
+The following describes how Lucene scoring evolves from underlying information retrieval models to (efficient) implementation. We first brief on VSM Score, then derive from it Lucene's Conceptual Scoring Formula, from which, finally, evolves Lucene's Practical Scoring Function (the latter is connected directly with Lucene classes and methods).
+
+Lucene combines Boolean model (BM) of Information Retrieval with Vector Space Model (VSM) of Information Retrieval - documents "approved" by BM are scored by VSM.
+
+(https://lucene.apache.org/core/4_0_0/core/org/apache/lucene/search/similarities/TFIDFSimilarity.html)
